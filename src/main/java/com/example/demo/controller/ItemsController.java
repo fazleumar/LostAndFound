@@ -55,4 +55,6 @@ public class ItemsController {
         itemsServiceImplementation.deleteItems(id);
         return new ModelAndView("redirect:/items");
     }
+
+    // Hi
 }
