@@ -1,33 +1,61 @@
 package com.example.demo.items;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "items")
 public class Items {
-    private Integer itemID;
-    private String reportType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id", nullable = false)
+    private Integer item_id;
+
+    @Column(name = "report_type", nullable = false)
+    private String report_type;
+    @Column(name = "title", nullable = false)
     private String title;
+    @Column(name = "description", nullable = true)
     private String description;
-    private String reportedBy;
+    @Column(name = "reported_by", nullable = false)
+    private String reported_by;
+    @Column(name = "latitude", nullable = false)
     private double latitude;
+    @Column(name = "longitude", nullable = false)
     private double longitude;
-    private String productImage;
+    @Column(name = "product_image", nullable = true)
+    private String product_image;
 
-    public Integer getItemID() {
-        return this.itemID;
+    public Items() {
     }
 
-    public void setItemID(Integer itemID) {
-        this.itemID = itemID;
+    public Items(String report_type, String title, String description, String reported_by, double latitude, double longitude, String product_image) {
+        this.report_type = report_type;
+        this.title = title;
+        this.description = description;
+        this.reported_by = reported_by;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.product_image = product_image;
     }
 
-    public String getReportType() {
-        return this.reportType;
+    public Integer getItem_id() {
+        return item_id;
     }
 
-    public void setReportType(String reportType) {
-        this.reportType = reportType;
+    public void setItem_id(Integer item_id) {
+        this.item_id = item_id;
+    }
+
+    public String getReport_type() {
+        return report_type;
+    }
+
+    public void setReport_type(String report_type) {
+        this.report_type = report_type;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public void setTitle(String title) {
@@ -35,23 +63,23 @@ public class Items {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getReportedBy() {
-        return this.reportedBy;
+    public String getReported_by() {
+        return reported_by;
     }
 
-    public void setReportedBy(String reportedBy) {
-        this.reportedBy = reportedBy;
+    public void setReported_by(String reported_by) {
+        this.reported_by = reported_by;
     }
 
     public double getLatitude() {
-        return this.latitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
@@ -59,18 +87,18 @@ public class Items {
     }
 
     public double getLongitude() {
-        return this.longitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getProductImage() {
-        return this.productImage;
+    public String getProduct_image() {
+        return product_image;
     }
 
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
+    public void setProduct_image(String product_image) {
+        this.product_image = product_image;
     }
 }

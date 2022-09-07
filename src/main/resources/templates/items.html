@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Items list</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Reported Items List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="module" src="/header.js"></script>
 </head>
 <body>
+<login-header></login-header>
 <div class="container">
-    <h2>Items list</h2>
-    <table class="table table-striped">
+    <div class="row">
+        <h1> List of Items </h1>
+    </div>
+    <table class="table table-striped table-bordered">
         <thead>
         <tr>
             <th>Item ID</th>
@@ -34,27 +29,30 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item:${items_list}">
-            <td th:text="${item.itemID}"></td>
-            <td th:text="${item.reportType}"></td>
+        <tr th:each = "item:${items}">
+            <td th:text="${item.item_id}"></td>
+            <td th:text="${item.report_type}"></td>
             <td th:text="${item.title}"></td>
             <td th:text="${item.description}"></td>
-            <td th:text="${item.reportedBy}"></td>
+            <td th:text="${item.reported_by}"></td>
             <td th:text="${item.latitude}"></td>
             <td th:text="${item.longitude}"></td>
-            <td th:text="${item.productImage}"></td>
-<!--            <td th:href="/items/update/${item.itemID}" var="updateURL">-->
-<!--                <a class="btn btn-primary" href="${updateURL}" role="button">Update</a>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <th:href value="/items/delete/${item.itemID}" var="deleteURL"/>-->
-<!--                <a class="btn btn-primary" href="${deleteURL}" role="button">Delete</a>-->
-<!--            </td>-->
+            <td th:text="${item.product_image}"></td>
+            <td>
+                <a th:href = "@{/items/edit/{id}(id=${item.item_id})}" class="btn btn-warning">Update</a>
+            </td>
+            <td>
+                <a th:href = "@{/items/{id}(id=${item.item_id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
-<!--    <th:href value="/items/add" var="addURL"/>-->
-    <a class="btn btn-primary" href="/items/add" role="button">Add new item</a>
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href = "@{/items/add}" class="btn btn-success mt-3">Add new item</a>
+        </div>
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>
