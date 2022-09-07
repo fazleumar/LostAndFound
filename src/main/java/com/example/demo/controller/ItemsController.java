@@ -1,60 +1,85 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import com.example.demo.items.Items;
-import com.example.demo.service.ItemsServiceImplementation;
+import com.example.demo.service.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ItemsController {
 
     @Autowired
-    private ItemsServiceImplementation itemsServiceImplementation;
+    private ItemsService itemsService;
 
-    @GetMapping(value = "/items")
-    public String getAllItems(Model model) {
-        List<Items> list = itemsServiceImplementation.getAllItems();
-        System.out.println(list);
-        model.addAttribute("items_list", list);
+    public ItemsController(ItemsService itemsService) {
+        this.itemsService = itemsService;
+    }
+
+    @GetMapping("/items")
+    public String listOfItems(Model model) {
+        model.addAttribute("items", itemsService.getAllItems());
         return "items";
     }
 
-    @GetMapping(value = "/items/add")
-    public String addItems(Model model) {
-        Items item = new Items();
-        model.addAttribute("items_list", item);
-        return "items_form";
+    @GetMapping("/items/add")
+    public String addItemForm(Model model) {
+        Items items = new Items();
+        model.addAttribute("items", items);
+        return "add_item";
     }
 
-    @GetMapping(value = "/items/update/{id}")
-    public ModelAndView editItems(@PathVariable int id) {
-        ModelAndView model = new ModelAndView();
-        Items item = itemsServiceImplementation.findItemsById(id);
-        model.addObject("itemsForm", item);
-        model.setViewName("items_form");
-        return model;
+//    @PostMapping("/items")
+//    public String saveItem(@ModelAttribute("items") Items item) {
+//        itemsService.saveItem(item);
+//        return "redirect:/items";
+//    }
+
+    @PostMapping("/items")
+    public String saveItem(@ModelAttribute("items") Items item) {
+        itemsService.saveItem(item);
+        return "redirect:/items";
     }
 
-    @PostMapping(value = "/items/save")
-    public ModelAndView saveOrUpdate(@ModelAttribute("itemsForm") Items item) {
-        if(item.getItemID() != null) {
-            itemsServiceImplementation.updateItems(item);
-        } else {
-            itemsServiceImplementation.addItems(item);
-        }
-        return new ModelAndView("redirect:/items");
+//    @Value("${tomtom.apikey}")
+//    private String tomTomApiKey;
+//
+//    @GetMapping("/api.tomtom.com/map/2/tile/basic/20/1/1.pbf?key=xa9LGWuC2HBkv8OLZsRCSJhxsAVJmH6q&view=PK")
+//    public String homePage(Model model) {
+//        model.addAttribute("apikey", tomTomApiKey);
+//        return "map";
+//    }
+
+//    https://{api.tomtom.com}/map/{2}/tile/{basic}/{20}/{1}/{1}.{pbf}?key={xa9LGWuC2HBkv8OLZsRCSJhxsAVJmH6q}&view={PK}
+
+    @GetMapping("/items/edit/{id}")
+    public String editItem (@PathVariable Integer id, Model model) {
+        model.addAttribute("items", itemsService.getItemById(id));
+        return "edit_item";
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public ModelAndView deleteItems(@PathVariable("id") int id) {
-        itemsServiceImplementation.deleteItems(id);
-        return new ModelAndView("redirect:/items");
+    @PostMapping("/items/{id}")
+    public String updateItem(@PathVariable Integer id, @ModelAttribute("item") Items item, Model model) {
+        Items existingItem = itemsService.getItemById(id);
+        existingItem.setItem_id(id);
+        existingItem.setReport_type(item.getReport_type());
+        existingItem.setTitle(item.getTitle());
+        existingItem.setDescription(item.getDescription());
+        existingItem.setReported_by(item.getReported_by());
+        existingItem.setLatitude(item.getLatitude());
+        existingItem.setLongitude(item.getLongitude());
+
+        itemsService.saveItem(existingItem);
+        return "redirect:/items";
     }
 
-    // Hi
+    // Handler to handle delete item request
+
+    @GetMapping("/items/{id}")
+    public String deleteItem(@PathVariable Integer id) {
+        itemsService.deleteItemById(id);
+        return "redirect:/items";
+    }
 }
