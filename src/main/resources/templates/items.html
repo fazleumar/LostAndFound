@@ -37,7 +37,12 @@
             <td th:text="${item.reported_by}"></td>
             <td th:text="${item.latitude}"></td>
             <td th:text="${item.longitude}"></td>
-            <td th:text="${item.product_image}"></td>
+            <td>
+                <img th:src="@{${item.image}}" alt="Product image" style="width: 100px" />
+<!--                <img th:src="F:\Bootcamp Accenture\WORK Folder\LostAndFound\item-photos\Huawei-Logo.png" style="width: 100px" />-->
+<!--                <img src="../static/images/pirate.jpg" width="1000" th:src="@{images/pirate.jpg}"/>-->
+
+            </td>
             <td>
                 <a th:href = "@{/items/edit/{id}(id=${item.item_id})}" class="btn btn-warning">Update</a>
             </td>
