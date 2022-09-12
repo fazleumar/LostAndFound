@@ -40,4 +40,9 @@ public class ItemsServiceImplementation implements ItemsService {
     public void deleteItemById(Integer id) {
         itemsRepository.deleteById(id);
     }
+
+    @Override
+    public List<Items> findByKeyword(String keyword) {
+        return itemsRepository.findByKeyword(keyword);
+    }
 }

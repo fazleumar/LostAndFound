@@ -38,10 +38,7 @@
             <td th:text="${item.latitude}"></td>
             <td th:text="${item.longitude}"></td>
             <td>
-                <img th:src="@{${item.image}}" alt="Product image" style="width: 100px" />
-<!--                <img th:src="F:\Bootcamp Accenture\WORK Folder\LostAndFound\item-photos\Huawei-Logo.png" style="width: 100px" />-->
-<!--                <img src="../static/images/pirate.jpg" width="1000" th:src="@{images/pirate.jpg}"/>-->
-
+                <img th:src="${item.getPhotosImagePath}" style="width: 100px" />
             </td>
             <td>
                 <a th:href = "@{/items/edit/{id}(id=${item.item_id})}" class="btn btn-warning">Update</a>

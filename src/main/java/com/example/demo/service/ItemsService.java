@@ -11,4 +11,5 @@ public interface ItemsService {
     Items getItemById(Integer id);
     Items updateItem(Items item);
     void deleteItemById(Integer id);
+    List<Items> findByKeyword(String keyword);
 }

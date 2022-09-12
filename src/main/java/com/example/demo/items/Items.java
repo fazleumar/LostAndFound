@@ -1,14 +1,12 @@
 package com.example.demo.items;
 
+import lombok.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.imageio.ImageIO;
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
-import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
+
 
 @Data
 @NoArgsConstructor
@@ -18,35 +16,43 @@ import java.net.URL;
 public class Items {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "item_id", nullable = false)
+    @NonNull
+    @Column(name = "item_id")
     private Integer item_id;
 
-    @Column(name = "report_type", nullable = false)
+    @NonNull
+    @Column(name = "report_type")
     private String report_type;
-    @Column(name = "title", nullable = false)
+
+    @NotNull
+    @Column(name = "title")
     private String title;
-    @Column(name = "description", nullable = true)
+
+    @NonNull
+    @Column(name = "description")
     private String description;
-    @Column(name = "reported_by", nullable = false)
+
+    @NonNull
+    @Column(name = "reported_by")
     private String reported_by;
-    @Column(name = "latitude", nullable = false)
+
+    @NonNull
+    @Column(name = "latitude")
     private double latitude;
-    @Column(name = "longitude", nullable = false)
+
+    @NonNull
+    @Column(name = "longitude")
     private double longitude;
-    @Column(name = "product_image", nullable = true)
+
+    @NonNull
+    @Column(name = "product_image")
     private String image;
 
     @Transient
     public String getPhotosImagePath() {
-//        Image imageToReturn = null;
-//        try {
-//            URL url = new URL(image);
-//            imageToReturn = ImageIO.read(url);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         if (image == null || item_id == null) return null;
-        System.out.println(image);
-        return image;
+        String imagePath = "/item-photos/" + item_id + "/" + image;
+        System.out.println(imagePath);
+        return imagePath;
     }
 }
