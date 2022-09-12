@@ -38,7 +38,9 @@
             <td th:text="${item.reported_by}"></td>
             <td th:text="${item.latitude}"></td>
             <td th:text="${item.longitude}"></td>
-            <td th:text="${item.product_image}"></td>
+            <td>
+                <img th:src="${item.getPhotosImagePath}" style="width: 100px" />
+            </td>
             <td>
                 <a th:href = "@{/items/edit/{id}(id=${item.item_id})}" class="btn btn-warning">Update</a>
             </td>
